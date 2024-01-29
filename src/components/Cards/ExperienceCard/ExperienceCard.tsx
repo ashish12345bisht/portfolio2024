@@ -18,7 +18,9 @@ const ExperienceCard = ({ experience }: { experience: experienceProps }) => {
               <h2 className="text-[30px] sm:text-[20px] font-bold">
                 {experience?.title}
               </h2>
-              <h2 className="text-[14px] font-bold">{experience?.position}</h2>
+              <h2 className="text-[14px] text-left sm:text-center font-bold">
+                {experience?.position}
+              </h2>
             </div>
             <h2 className="text-[14px] sm:text-[10px] font-bold">
               {experience?.timeline}

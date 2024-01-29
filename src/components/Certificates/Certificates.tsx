@@ -2,7 +2,6 @@
 import React from "react";
 import ContainerHeading from "../Canvas/ContainerHeading";
 import CertificatesCard from "../Cards/CertificatesCard/CertificatesCard";
-import Slider from "react-slick";
 
 const Certificates = () => {
   const certificates = [
@@ -22,19 +21,12 @@ const Certificates = () => {
     },
   ];
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
   return (
     <section id="certificates">
       <ContainerHeading heading="Certificates" />
       <div className="flex justify-around px-10 sm:px-2 flex-wrap">
         {certificates?.map((certificate) => (
-          <CertificatesCard certificate={certificate} />
+          <CertificatesCard key={certificate.text} certificate={certificate} />
         ))}
       </div>
     </section>

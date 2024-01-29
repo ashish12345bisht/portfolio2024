@@ -49,7 +49,9 @@ const SingleWork: React.FC<{ work: workProps }> = ({ work }) => {
           </h2>
           <ul className="text-[14px] text-white font-medium">
             {work?.description?.map((item) => (
-              <li className="list-disc">{item}</li>
+              <li key={item} className="list-disc">
+                {item}
+              </li>
             ))}
           </ul>
         </div>

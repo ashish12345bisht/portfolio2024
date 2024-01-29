@@ -80,7 +80,12 @@ const Contact = () => {
             href="https://leetcode.com/ashish12345bisht/"
             target="_blank"
           >
-            <Code className="w-[60px] h-[60px] sm:w-[16px] sm:h-[16px] m-auto" />
+            {/* <Code className="w-[60px] h-[60px] sm:w-[16px] sm:h-[16px] m-auto" /> */}
+            <img
+              className="w-[60px] h-[60px] sm:w-[16px] sm:h-[16px] m-auto"
+              src="/leetcode.png"
+              alt="leetcode"
+            />
             {/* ashish12345bisht@gmail.com */}
           </a>
         </MotionDiv>

@@ -1,8 +1,6 @@
 import Experience from "@/components/Experience/Experience";
 import Hero from "@/components/Hero/Hero";
 import Works from "@/components/Works/Works";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import Technologies from "@/components/Technologies/Technologies";
 import Certificates from "@/components/Certificates/Certificates";
 import Contact from "@/components/Contact/Contact";
