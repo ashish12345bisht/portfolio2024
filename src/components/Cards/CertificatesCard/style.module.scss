@@ -1,0 +1,23 @@
+.gradientBorder {
+  background-color: linear-gradient(to right, #001d4f, #68008e);
+  border: solid 5px transparent; /* !importanté */
+  border-radius: 1em;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -5px; /* !importanté */
+    border-radius: inherit; /* !importanté */
+    background: linear-gradient(to left, #002564, #570077);
+  }
+
+  &:hover {
+    box-shadow: 0px 0px 50px #fff;
+    transition: all 0.3s ease-in-out;
+  }
+}
