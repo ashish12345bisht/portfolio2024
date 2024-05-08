@@ -42,8 +42,8 @@ const Works = () => {
       title: "Recrutium",
       time: "(07/2022 - 12/2022)",
       description: [
-        "Developed a dynamic web application using React JS, Node JS, MySQL, and Python technologies.",
-        "Employed Redux to efficiently manage states and seamlessly integrated multiple modules into a unified website, ensuring enhanced performance and a seamless user experience.",
+        "Developed a job portal using React, Node and MySql.",
+        "Implemented resume parsing by integrating Python with Node JS.",
       ],
       image: "/recrutium.png",
       index: 4,

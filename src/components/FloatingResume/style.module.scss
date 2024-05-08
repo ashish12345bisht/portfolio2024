@@ -1,0 +1,29 @@
+.floatingDownload {
+  position: sticky;
+  bottom: 5%;
+  left: 90%;
+  z-index: 99;
+  animation: bounce 2s ease infinite;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  background: linear-gradient(45deg, #00399c, #bd61e2);
+  border: 4px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px); /* Adjust this value for bounce height */
+    }
+  }
+  @media screen and (max-width: 699px) {
+    left: 80%;
+  }
+}

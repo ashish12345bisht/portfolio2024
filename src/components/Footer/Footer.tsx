@@ -13,6 +13,7 @@ import json from "../../../package.json";
 const Footer = () => {
   const handleCodeView = () =>
     window.open("https://github.com/ashish12345bisht/portfolio2024", "_blank");
+
   return (
     <footer className="h-[60px] sm:h-[100px] text-white flex sm:flex-col items-center justify-around">
       <div className="grid place-content-center sm:text-sm text-center">
