@@ -6,6 +6,7 @@ import Certificates from "@/components/Certificates/Certificates";
 import Contact from "@/components/Contact/Contact";
 import Footer from "@/components/Footer/Footer";
 import FloatingResume from "@/components/FloatingResume/FloatingResume";
+import MobileWarning from "@/components/MobileWarning/MobileWarning";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Contact />
       <Footer />
       <FloatingResume />
+      <MobileWarning />
       <div className="profile">
         <img alt="profile" src="/myself.png" />
         <h1>Hi! I am Ashish</h1>
