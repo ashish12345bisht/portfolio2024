@@ -12,3 +12,6 @@
 
 # vercel
 .vercel
+
+# local design mockups (contain employer details)
+/docs/design

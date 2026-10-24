@@ -1,0 +1,61 @@
+On Windows, Win+V opens your clipboard history: everything you copied recently, ready to paste again. After switching to Linux full time, I kept reaching for it. So I built [Copyshelf](https://github.com/ashish12345bisht/copyshelf): press **Super+V**, pick something you copied earlier, and it gets pasted into the app you're using.
+
+It sounds like a weekend project. On X11 it nearly is. On Wayland, the display protocol most modern Linux desktops now use, it isn't, because Wayland deliberately blocks the two things a clipboard manager needs to do.
+
+## The two things Wayland won't let you do
+
+Wayland was designed with isolation in mind. Apps shouldn't be able to spy on each other or control each other. That's great for security, and it's exactly what a clipboard manager needs to do:
+
+1. **Read the clipboard in the background.** On Wayland, an app can normally read the clipboard only while it has keyboard focus. A clipboard manager sits in the background and never has focus.
+2. **Paste into another app.** "Pick an item and it's pasted" means pressing Ctrl+V in someone else's window. Wayland doesn't let apps send keystrokes to other apps.
+
+There's no single answer that works everywhere, because each desktop decided how much to allow, and how. So Copyshelf detects the desktop it's running on and picks a method for each job.
+
+## Watching the clipboard
+
+| Desktop                     | How Copyshelf sees copies                                                |
+| --------------------------- | ------------------------------------------------------------------------ |
+| GNOME (Wayland)             | Runs as an X11 app through XWayland; GNOME passes every copy to X11 apps |
+| KDE Plasma, Sway, Hyprland… | The Wayland **data‑control** protocol, through `wl-paste --watch`        |
+| Any X11 session             | Plain GTK clipboard events                                               |
+
+The GNOME trick is my favourite: GNOME doesn't implement data‑control, but it _does_ keep X11 apps in sync with the clipboard. Running Copyshelf under XWayland on GNOME gets clipboard events for free, without asking the user for anything.
+
+## Pasting into the focused app
+
+| Desktop              | How Copyshelf pastes                                               |
+| -------------------- | ------------------------------------------------------------------ |
+| GNOME (Wayland)      | A small GNOME Shell extension presses Ctrl+V when asked over D‑Bus |
+| KDE Plasma (Wayland) | The RemoteDesktop portal (asks permission once)                    |
+| Sway, Hyprland…      | `wtype`                                                            |
+| X11                  | `xdotool`                                                          |
+
+GNOME needed the most work. Its compositor won't accept synthetic input from apps, but code running _inside_ GNOME Shell can do it. So Copyshelf ships a tiny Shell extension that listens on D‑Bus. When you pick an item, Copyshelf puts it on the clipboard, closes its window, and asks the extension to press Ctrl+V in whatever app now has focus. No permission prompts, no root.
+
+The same extension solves a second GNOME problem: Wayland apps can't see where the mouse pointer is, or position their own windows. Win+V opens near the pointer, so the extension moves the popup there before it's drawn.
+
+## Terminals paste differently
+
+Ctrl+V in a terminal doesn't paste; Ctrl+Shift+V does. So before pasting, Copyshelf checks whether the focused app is a terminal. The main signal is the app's `.desktop` file: terminals list `TerminalEmulator` in their categories. A short list of known terminal app IDs covers the ones that don't.
+
+## Never fail silently
+
+Some setups can't auto‑paste at all, like GNOME 42–44 without the extension. There, Copyshelf still puts the item on the clipboard and shows a notification saying "Press Ctrl+V". Users forgive a missing feature. They don't forgive clicking something and having nothing happen.
+
+## Don't store passwords
+
+A clipboard history that quietly records every password you copy is a security problem. Password managers like KeePassXC attach a hint to sensitive copies: an extra clipboard format called `x-kde-passwordManagerHint`. Copyshelf checks the formats on every copy and skips anything carrying that hint. It's on by default.
+
+## Shipping it
+
+Features don't matter if installing is painful, so I spent real time on the boring parts:
+
+- **One‑line install, no root.** A `curl | bash` installer that puts everything in `~/.local`, sets up autostart and the Super+V shortcut, and tells you which optional tools your desktop needs.
+- **Tests in CI.** Unit and integration tests run on GitHub Actions against Ubuntu 22.04 and 24.04, plus manual testing on Ubuntu 26.04 with GNOME on Wayland.
+- **Honest docs.** The README has a table of which desktops are tested by hand and which aren't yet.
+
+## What I learned
+
+Desktop Linux isn't one platform; it's several that share a kernel. The design that worked was _detect, then pick a strategy, then fall back clearly_, instead of hoping one approach works everywhere. That pattern carries well beyond clipboards.
+
+Copyshelf is open source. If you're on Linux, [give it a try](https://github.com/ashish12345bisht/copyshelf), and bug reports from desktops I haven't tested by hand are very welcome.

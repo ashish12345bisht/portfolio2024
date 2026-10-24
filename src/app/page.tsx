@@ -1,27 +1,23 @@
-import Experience from "@/components/Experience/Experience";
-import Hero from "@/components/Hero/Hero";
-import Works from "@/components/Works/Works";
-import Technologies from "@/components/Technologies/Technologies";
-import Certificates from "@/components/Certificates/Certificates";
-import Contact from "@/components/Contact/Contact";
-import Footer from "@/components/Footer/Footer";
-import FloatingResume from "@/components/FloatingResume/FloatingResume";
+import { Certificates, Contact, EarlierWork } from "@/sections/Closing";
+import { Experience } from "@/sections/experience/Experience";
+import { Hero } from "@/sections/hero/Hero";
+import { Highlights } from "@/sections/Highlights";
+import { PersonalProjects } from "@/sections/projects/PersonalProjects";
+import { Writing } from "@/sections/blog/Writing";
+import { SelectedWork } from "@/sections/work/SelectedWork";
 
 export default function Home() {
   return (
-    <main className="main-container relative">
+    <main id="top">
       <Hero />
-      <Works />
+      <Highlights />
+      <SelectedWork />
+      <PersonalProjects />
       <Experience />
-      <Technologies />
+      <Writing />
+      <EarlierWork />
       <Certificates />
       <Contact />
-      <Footer />
-      <FloatingResume />
-      <div className="profile">
-        <img alt="profile" src="/myself.png" />
-        <h1>Hi! I am Ashish</h1>
-      </div>
     </main>
   );
 }

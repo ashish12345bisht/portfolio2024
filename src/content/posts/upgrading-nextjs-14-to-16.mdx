@@ -1,0 +1,52 @@
+I recently took a large, long‑lived production Next.js app from version 14 to 16, along with Tailwind 3 → 4, Jest 29 → 30 and Node 24. The trigger wasn't excitement about new features. It was a growing list of dependency vulnerabilities that couldn't be fixed without moving the framework.
+
+Big upgrades on big apps rarely fail loudly. They fail as a button that's 4px off, a chart label that wraps, a page that renders fine everywhere except one browser. Here's what kept this one boring, which is the goal.
+
+## 1. Know what you're shipping before you change it
+
+Before touching versions, I wanted a real picture of the dependency tree, not a gut feeling. Generating an **SBOM** (software bill of materials) in CI and uploading it to a dependency‑tracking dashboard gave every app a list of known vulnerabilities per release.
+
+That list did two things. It told me which upgrades actually mattered, and it gave a clear definition of done: the findings that triggered the work are gone.
+
+## 2. Upgrade in steps, keep main releasable
+
+I didn't change everything in one branch. The order that worked:
+
+1. Node to the new LTS, on its own.
+2. Next.js, one major at a time, using the official codemod: `npx @next/codemod upgrade`.
+3. Tailwind 3 → 4.
+4. Test tooling (Jest 30) last.
+
+After each step the app built, the tests passed, and it could have shipped. When something broke, the diff that caused it was small.
+
+## 3. The breaking changes worth knowing about
+
+A few changes did most of the damage:
+
+- **Request APIs are async from Next 15.** `params`, `searchParams`, `cookies()` and `headers()` return promises. The codemod handles most call sites, but read what it changed.
+- **`next lint` is gone in 16.** Linting moves to the ESLint CLI with a flat config (`eslint.config.mjs`) using `eslint-config-next`.
+- **Turbopack is the default bundler.** Most apps won't notice. Custom webpack config will.
+- **Tailwind 4 is configured in CSS.** `tailwind.config.js` becomes `@theme` blocks in your stylesheet, and some utilities are renamed (`shadow-sm` → `shadow-xs`, `outline-none` → `outline-hidden`). Run `npx @tailwindcss/upgrade` **before** bumping the packages; it expects to start from v3.
+
+## 4. Make visual tests deterministic first
+
+Playwright screenshot tests were the real safety net, because most regressions in an upgrade like this are visual. But screenshot tests are only useful when a diff means something changed. Before the upgrade, ours occasionally failed for no reason. A few fixes made them trustworthy:
+
+- **Hide dev‑only UI.** The Next.js dev indicator turned up in screenshots and moved between versions. Turn it off for test runs (`devIndicators: false` in `next.config`).
+- **Load environment the same way everywhere.** Locally the tests picked up `.env` files; in CI they didn't. Loading each app's env files explicitly in the Playwright config made runs identical.
+- **Wait for the right thing.** Wait for the content you're asserting on, not for network idle or a fixed timeout.
+
+Once the suite was stable, every remaining diff after the upgrade was real. Some were bugs to fix; a few were intended changes, so we updated those baselines on purpose, one by one.
+
+## 5. Clean up while you're in there
+
+Upgrades surface rot: React warnings about invalid SVG props, imports that only worked by accident, environment files sourced in CI that shouldn't be. Fixing them in the same effort costs little, because you're already reading that code.
+
+## What I'd tell my past self
+
+- Stabilise the tests **before** upgrading, not during.
+- Use the SBOM to decide what to upgrade, and to prove you're done.
+- One major at a time, releasable after every step.
+- Read the codemod's diff; don't just trust it.
+
+I followed the same playbook on this portfolio, from Next 14 to 16 and Tailwind 4, with before‑and‑after screenshots to compare. It's a small app, but the rules held.
