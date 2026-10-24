@@ -3,15 +3,16 @@ import React, { useState } from "react";
 import ContainerHeading from "../Canvas/ContainerHeading";
 import BallCanvas from "../Canvas/BallCanvas";
 import TextCanvas from "../Canvas/TextCanvas";
+import type { Positions, Technology } from "@/lib/interface";
 
 const Technologies = () => {
   const [text, setText] = useState("Click on any ball");
-  const [positions, setPositions] = useState({
-    cameraPosition: [12, 0, 0] as [number, number, number],
-    textPosition: [-6.5, 0, 0] as [number, number, number],
+  const [positions, setPositions] = useState<Positions>({
+    cameraPosition: [12, 0, 0],
+    textPosition: [-6.5, 0, 0],
   });
 
-  const technologiesLeftArr = [
+  const technologiesLeftArr: Technology[] = [
     {
       index: 1,
       image: "/javascript.png",
@@ -68,7 +69,7 @@ const Technologies = () => {
     },
   ];
 
-  const technologiesRightArr = [
+  const technologiesRightArr: Technology[] = [
     {
       index: 7,
       image: "/git.png",
@@ -125,16 +126,16 @@ const Technologies = () => {
     },
   ];
 
-  const handleTechnologyClick = (technology: any) => {
-    setText(technology?.text);
-    setPositions(technology?.positions);
+  const handleTechnologyClick = (technology: Technology) => {
+    setText(technology.text);
+    setPositions(technology.positions);
   };
 
   return (
     <section id="technologies">
       <ContainerHeading heading="Technologies" />
-      <div className="flex h-auto sm:flex-col w-full">
-        <div className="w-1/6 sm:w-full sm:flex flex-wrap sm:items-center">
+      <div className="flex h-auto w-full sm:flex-col">
+        <div className="w-1/6 flex-wrap sm:flex sm:w-full sm:items-center">
           {technologiesLeftArr?.map((technology) => (
             <BallCanvas
               key={technology?.image}
@@ -146,7 +147,7 @@ const Technologies = () => {
         <div className="w-4/6 sm:w-full">
           <TextCanvas positions={positions} text={text} />
         </div>
-        <div className="w-1/6 sm:w-full sm:flex flex-wrap sm:items-center">
+        <div className="w-1/6 flex-wrap sm:flex sm:w-full sm:items-center">
           {technologiesRightArr?.map((technology) => (
             <BallCanvas
               key={technology?.image}

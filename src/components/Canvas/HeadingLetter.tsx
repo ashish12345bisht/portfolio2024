@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { MotionDiv } from "../Motion/MotionDiv";
-import { useAnimation, useInView } from "framer-motion";
+import { useAnimation, useInView } from "motion/react";
 
 const HeadingLetter = ({
   letter,
@@ -19,7 +19,7 @@ const HeadingLetter = ({
     if (isInView) {
       mainControls.start("visible");
     }
-  }, [isInView]);
+  }, [isInView, mainControls]);
   return (
     <MotionDiv
       ref={ref}
@@ -38,7 +38,7 @@ const HeadingLetter = ({
         duration: 0.5,
       }}
     >
-      <span className="text-white text-[60px] sm:text-[30px] font-extrabold text-center">
+      <span className="text-center text-[60px] font-extrabold text-white sm:text-[30px]">
         {letter}
       </span>
     </MotionDiv>

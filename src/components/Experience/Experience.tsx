@@ -9,7 +9,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useMediaQuery } from "react-responsive";
 
 const Experience = () => {
   const experience = [
@@ -54,25 +53,11 @@ const Experience = () => {
       url: "",
     },
   ];
-  const isMobileScreen = useMediaQuery({ query: "(max-width: 640px)" });
-
-  const settings = {
-    className: "center",
-    centerMode: true,
-    infinite: true,
-    centerPadding: "60px",
-    slidesToShow: 1,
-    speed: 500,
-  };
-
   return (
     <section id="experience">
       <ContainerHeading heading="Experience" />
-      <div className="w-[90vw] m-auto">
-        <Carousel
-          className="w-3/4 m-auto"
-          // orientation={isMobileScreen ? "vertical" : "horizontal"}
-        >
+      <div className="m-auto w-[90vw]">
+        <Carousel className="m-auto w-3/4">
           <CarouselContent>
             {experience?.map((experience) => (
               <CarouselItem key={experience.title}>

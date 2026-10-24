@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { workProps } from "@/lib/interface";
 import { MotionDiv } from "../Motion/MotionDiv";
-import { useAnimation, useInView } from "framer-motion";
+import { useAnimation, useInView } from "motion/react";
 import { ExternalLink } from "lucide-react";
 
 const SingleWork: React.FC<{ work: workProps }> = ({ work }) => {
@@ -13,7 +13,7 @@ const SingleWork: React.FC<{ work: workProps }> = ({ work }) => {
     if (isInView) {
       mainControls.start("visible");
     }
-  }, [isInView]);
+  }, [isInView, mainControls]);
   return (
     <MotionDiv
       ref={ref}
@@ -33,21 +33,21 @@ const SingleWork: React.FC<{ work: workProps }> = ({ work }) => {
       }}
       className={`flex items-center justify-around px-40 py-10 sm:px-2 ${
         work?.index % 2 ? "flex-row-reverse" : ""
-      }  sm:flex-col-reverse`}
+      } sm:flex-col-reverse`}
     >
       <div className="w-1/2 sm:w-full">
         <div className="m-auto w-2/3">
-          <h1 className="text-[45px] text-[#fdd1ff] font-black">
+          <h1 className="text-[45px] font-black text-[#fdd1ff]">
             {work?.title}
           </h1>
-          <h2 className="text-[20px] text-[#fdd1ff] font-extrabold mb-4 flex align-middle items-center">
+          <h2 className="mb-4 flex items-center align-middle text-[20px] font-extrabold text-[#fdd1ff]">
             {work?.time}{" "}
             <ExternalLink
-              className="cursor-pointer ml-2 w-4 h-4"
+              className="ml-2 h-4 w-4 cursor-pointer"
               onClick={() => window.open(work?.url, "_blank")}
             />
           </h2>
-          <ul className="text-[14px] text-white font-medium">
+          <ul className="text-[14px] font-medium text-white">
             {work?.description?.map((item) => (
               <li key={item} className="list-disc">
                 {item}
@@ -56,17 +56,17 @@ const SingleWork: React.FC<{ work: workProps }> = ({ work }) => {
           </ul>
         </div>
       </div>
-      <div className="w-1/2 sm:w-full flex justify-center">
-        <div className="text-right w-[280px] h-[280px] border-[14px] rounded-[35px] border-indigo-500/100">
+      <div className="flex w-1/2 justify-center sm:w-full">
+        <div className="h-[280px] w-[280px] rounded-[35px] border-[14px] border-indigo-500/100 text-right">
           <div
-            className={`w-[250px] flex align-middle items-center object-contain bg-[#333] p-10 h-[250px] ${
+            className={`flex h-[250px] w-[250px] items-center bg-[#333] object-contain p-10 align-middle ${
               work?.index % 2
                 ? "-translate-x-12 sm:-translate-x-8"
                 : "translate-x-12 sm:translate-x-8"
-            } scale-110 -translate-y-12 sm:-translate-y-8 rounded-[30px]`}
+            } -translate-y-12 scale-110 rounded-[30px] sm:-translate-y-8`}
           >
             <img
-              className={`w-[250px] h-[250px] object-contain drop-shadow-lg image-white`}
+              className={`image-white h-[250px] w-[250px] object-contain drop-shadow-lg`}
               alt="user"
               src={work?.image}
             />

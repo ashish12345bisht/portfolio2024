@@ -14,14 +14,13 @@ const TextCanvas: React.FC<TextProps> = ({ text, positions }) => {
       variants={{
         hidden: { opacity: 0, y: 200 },
         visible: { opacity: 1, y: 0 },
-        // exit: { opacity: 0, y: -100, rotate: -180 },
       }}
       transition={{
         delay: 0,
         ease: "easeInOut",
         duration: 1,
       }}
-      className="m-auto w-full h-full"
+      className="m-auto h-full w-full"
     >
       <Canvas camera={{ position: positions.cameraPosition }}>
         <Suspense fallback={null}>
@@ -31,15 +30,7 @@ const TextCanvas: React.FC<TextProps> = ({ text, positions }) => {
           >
             {text}
           </Text3D>
-          <OrbitControls
-            autoRotate
-            enableZoom={false}
-            // maxPolarAngle={Math.PI / 2}
-            // minPolarAngle={Math.PI / 2}
-            rotation={[1, 2, 3]}
-            // minAzimuthAngle={-Math.PI / 4}
-            // maxAzimuthAngle={Math.PI / 4}
-          />
+          <OrbitControls autoRotate enableZoom={false} />
         </Suspense>
         <Preload all />
       </Canvas>

@@ -1,17 +1,15 @@
 import styles from "./style.module.scss";
-import Link from "next/link";
-import { motion } from "framer-motion";
 import { slide, scale } from "../../animation";
 import { MotionDiv } from "@/components/Motion/MotionDiv";
 
-export default function Index({
+export default function NavLink({
   data,
   isActive,
   setSelectedIndicator,
 }: {
-  data: any;
+  data: { title: string; href: string; index: number };
   isActive: boolean;
-  setSelectedIndicator: any;
+  setSelectedIndicator: (href: string) => void;
 }) {
   const { title, href, index } = data;
 
@@ -34,13 +32,11 @@ export default function Index({
       ></MotionDiv>
       <span
         onClick={() =>
-          document
-            ?.getElementById(href)
-            ?.scrollIntoView({
-              behavior: "smooth",
-              block: "nearest",
-              inline: "start",
-            })
+          document?.getElementById(href)?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "start",
+          })
         }
       >
         {title}

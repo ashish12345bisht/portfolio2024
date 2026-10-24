@@ -5,11 +5,9 @@ import { useFrame } from "@react-three/fiber";
 import { random } from "maath";
 import { useRef, useState } from "react";
 import type { Points as PointsType } from "three";
-// import { Group } from 'three'
 
 const Stars = () => {
   const ref = useRef<PointsType>(null);
-  // const [sphere] = useState(() => random.inSphere(new Float32Array(5000), { radius: 1.2 }));
   const [sphere] = useState(() => {
     // Convert Float64Array to Float32Array
     const float64Array = random.inSphere(new Float64Array(6000), {

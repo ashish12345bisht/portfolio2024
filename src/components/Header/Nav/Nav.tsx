@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styles from "./style.module.scss";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { menuSlide } from "../animation";
-import Link from "./Link/Link";
+import NavLink from "./Link/Link";
 
 const navItems = [
   {
@@ -56,21 +56,15 @@ export default function Nav() {
           </div>
           {navItems.map((data, index) => {
             return (
-              <Link
+              <NavLink
                 key={index}
                 data={{ ...data, index }}
-                isActive={selectedIndicator == data.href}
+                isActive={selectedIndicator === data.href}
                 setSelectedIndicator={setSelectedIndicator}
-              ></Link>
+              />
             );
           })}
         </div>
-        {/* <div className={styles.footer}>
-          <a>Awwwards</a>
-          <a>Instagram</a>
-          <a>Dribble</a>
-          <a>LinkedIn</a>
-        </div> */}
       </div>
     </motion.div>
   );

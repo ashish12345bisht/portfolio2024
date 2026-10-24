@@ -29,18 +29,18 @@ const CertificatesCard: React.FC<{ certificate: CertificateProps }> = ({
     >
       <Tilt>
         <div
-          className={`${styles.gradientBorder} relative p-4 w-full sm:max-w-[400px] max-w-[400px] h-[450px] rounded-3xl cursor-pointer mb-3`}
+          className={`${styles.gradientBorder} relative mb-3 h-[450px] w-full max-w-[400px] cursor-pointer rounded-3xl p-4 sm:max-w-[400px]`}
           onClick={handleClick}
         >
           <img
-            className="rounded-2xl overflow-hidden w-full h-[300px] object-fill"
+            className="h-[300px] w-full overflow-hidden rounded-2xl object-fill"
             alt="certificate"
             src={image}
           />
-          <h2 className="text-white text-[20px] font-bold text-center my-6">
+          <h2 className="my-6 text-center text-[20px] font-bold text-white">
             {text}
           </h2>
-          <p className="text-[12px] absolute bottom-4 right-2 text-white">
+          <p className="absolute right-2 bottom-4 text-[12px] text-white">
             {time}
           </p>
         </div>

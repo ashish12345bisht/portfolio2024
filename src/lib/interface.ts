@@ -17,17 +17,21 @@ export interface experienceProps {
   url: string;
 }
 
-export interface TextProps {
-  text: string;
-  positions: {
-    cameraPosition: [number, number, number];
-    textPosition: [number, number, number];
-  };
-}
-
 export interface Positions {
   cameraPosition: [number, number, number];
   textPosition: [number, number, number];
+}
+
+export interface Technology {
+  index: number;
+  image: string;
+  text: string;
+  positions: Positions;
+}
+
+export interface TextProps {
+  text: string;
+  positions: Positions;
 }
 
 export interface CertificateProps {

@@ -24,7 +24,7 @@ const Certificates = () => {
   return (
     <section id="certificates">
       <ContainerHeading heading="Certificates" />
-      <div className="flex justify-around px-10 sm:px-2 flex-wrap">
+      <div className="flex flex-wrap justify-around px-10 sm:px-2">
         {certificates?.map((certificate) => (
           <CertificatesCard key={certificate.text} certificate={certificate} />
         ))}

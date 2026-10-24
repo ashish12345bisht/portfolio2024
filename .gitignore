@@ -1,3 +1,14 @@
 /node_modules
 /build
 /.next
+# local baseline/comparison screenshots
+/docs/screenshots
+
+# typescript
+*.tsbuildinfo
+
+# env files
+.env*.local
+
+# vercel
+.vercel

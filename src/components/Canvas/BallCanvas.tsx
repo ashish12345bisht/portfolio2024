@@ -9,7 +9,6 @@ import {
   Preload,
   useTexture,
 } from "@react-three/drei";
-import Loader from "../Loader/Loader";
 
 const Ball = ({ url }: { url: string }) => {
   const [decal] = useTexture([url]);
@@ -32,7 +31,6 @@ const Ball = ({ url }: { url: string }) => {
           rotation={[2 * Math.PI, 0, 6.25]}
           scale={1}
           map={decal}
-          // flatShading
         />
       </mesh>
     </Float>
@@ -55,7 +53,7 @@ const BallCanvas = ({
         gl={{ preserveDrawingBuffer: true }}
         onClick={onClick}
       >
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={null}>
           <OrbitControls enableZoom={false} />
           <Ball url={icon} />
         </Suspense>
