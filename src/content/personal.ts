@@ -3,6 +3,21 @@ import type { PersonalProject } from "./types";
 // Newest first. Add each new app here and it shows up in the Personal projects section.
 export const personalProjects: PersonalProject[] = [
   {
+    name: "Code Typer",
+    tagline: "Learn DSA by typing the solutions",
+    summary:
+      "A typing game for coding practice. Pick a problem, read the approach, then type the solution while it tracks your speed and accuracy. 229 problems, from first syntax to graphs and DP, in C++, Java, Python or JavaScript.",
+    features: [
+      "18 syntax basics for beginners, then 211 DSA problems across 18 topics",
+      "Every solution in all four languages is compiled and run against test cases",
+      "Live WPM and accuracy, auto-indent, and progress saved per language",
+    ],
+    stack: ["React 19", "TypeScript", "Vite", "Vitest", "Vercel"],
+    platform: "Web",
+    repo: "https://github.com/ashish12345bisht/code-typer",
+    live: "https://code-typer.ashishxbisht.in",
+  },
+  {
     name: "Copyshelf",
     tagline: "Clipboard history for Linux",
     summary:

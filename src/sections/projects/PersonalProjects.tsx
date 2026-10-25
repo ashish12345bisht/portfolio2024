@@ -10,11 +10,14 @@ import { personalProjects } from "@/content/personal";
 import { socials } from "@/content/site";
 import type { PersonalProject } from "@/content/types";
 import { button } from "@/lib/styles";
+import { cn } from "@/lib/utils";
+import { CodeTyperMock } from "./CodeTyperMock";
 import { CopyshelfMock } from "./CopyshelfMock";
 
 // Project-specific visuals, keyed by project name. Projects without one get a text-only card.
 const previews: Record<string, React.ReactNode> = {
   Copyshelf: <CopyshelfMock />,
+  "Code Typer": <CodeTyperMock />,
 };
 
 const github = socials.find((s) => s.label === "GitHub")?.href;
@@ -74,11 +77,21 @@ function ProjectCard({ project }: { project: PersonalProject }) {
           </div>
         )}
         <div className="mt-auto flex flex-wrap gap-3 pt-2">
+          {project.live && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={button({ variant: "light" })}
+            >
+              Try it live <ArrowUpRight className="size-4" aria-hidden />
+            </a>
+          )}
           <a
             href={project.repo}
             target="_blank"
             rel="noopener noreferrer"
-            className={button({ variant: "light" })}
+            className={button({ variant: project.live ? "ghost" : "light" })}
           >
             <FaGithub className="size-4" aria-hidden /> View on GitHub
           </a>
@@ -90,33 +103,40 @@ function ProjectCard({ project }: { project: PersonalProject }) {
               Case study
             </Link>
           )}
-          {project.live && (
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={button({ variant: "ghost" })}
-            >
-              Live demo <ArrowUpRight className="size-4" aria-hidden />
-            </a>
-          )}
         </div>
       </div>
     </article>
   );
 }
 
-function NextBuildCard() {
+function NextBuildCard({ wide }: { wide: boolean }) {
   return (
-    <div className="flex h-full flex-col gap-4 rounded-[20px] border border-dashed border-line-3 p-6 md:p-7">
-      <p className="flex items-center gap-2 font-mono text-xs text-dim uppercase">
+    <div
+      className={cn(
+        "flex h-full flex-col gap-4 rounded-[20px] border border-dashed border-line-3 p-6 md:p-7",
+        wide && "md:flex-row md:items-center md:gap-6",
+      )}
+    >
+      <p
+        className={cn(
+          "flex items-center gap-2 font-mono text-xs text-dim uppercase",
+          wide && "md:flex-none md:whitespace-nowrap",
+        )}
+      >
         <span
           className="size-2 animate-pulse rounded-full bg-accent"
           aria-hidden
         />
         In progress
       </p>
-      <h3 className="text-xl font-semibold">Next build</h3>
+      <h3
+        className={cn(
+          "text-xl font-semibold",
+          wide && "md:flex-none md:whitespace-nowrap",
+        )}
+      >
+        Next build
+      </h3>
       <p className="text-sm leading-relaxed text-muted">
         I build small tools that fix my own daily annoyances, then open-source
         them. The next one lands here soon.
@@ -126,7 +146,10 @@ function NextBuildCard() {
           href={github}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-auto inline-flex items-center gap-1.5 text-sm text-fg-2 transition-colors hover:text-fg"
+          className={cn(
+            "mt-auto inline-flex items-center gap-1.5 text-sm text-fg-2 transition-colors hover:text-fg",
+            wide && "md:mt-0 md:ml-auto md:flex-none",
+          )}
         >
           Follow along on GitHub <ArrowUpRight className="size-4" aria-hidden />
         </a>
@@ -136,6 +159,9 @@ function NextBuildCard() {
 }
 
 export function PersonalProjects() {
+  // One project sits beside the "next build" card; a pair shares a row with it below.
+  const paired = personalProjects.length % 2 === 0;
+
   return (
     <section
       id="projects"
@@ -156,13 +182,19 @@ export function PersonalProjects() {
           <Reveal
             key={project.name}
             delay={i * 0.08}
-            className="min-w-0 md:col-span-4"
+            className={cn(
+              "min-w-0",
+              paired ? "md:col-span-3" : "md:col-span-4",
+            )}
           >
             <ProjectCard project={project} />
           </Reveal>
         ))}
-        <Reveal delay={0.08} className="md:col-span-2">
-          <NextBuildCard />
+        <Reveal
+          delay={0.08}
+          className={paired ? "md:col-span-6" : "md:col-span-2"}
+        >
+          <NextBuildCard wide={paired} />
         </Reveal>
       </div>
     </section>
