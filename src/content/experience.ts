@@ -4,8 +4,7 @@ export const roles: Role[] = [
   {
     mark: "DK",
     company: "Daikin India × Conserve It",
-    // TODO: replace with your official job title.
-    title: "[TITLE] · Shared Service Center, for Daikin Australia",
+    title: "Software Engineer · Shared Service Center, for Daikin Australia",
     period: "09/2024 — Now",
     points: [
       "Full‑stack engineer on a building‑analytics platform for Daikin Australia, from the Next.js web app to Spring Boot microservices.",
